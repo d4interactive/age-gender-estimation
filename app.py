@@ -1,6 +1,6 @@
 import logging
 
-from flask import request, jsonify
+from flask import request, jsonify, Flask
 from demo import make_prediction
 logging.basicConfig(level=logging.INFO,
                     format="{'time': '%(asctime)s', 'name': '%(funcName)s', \
@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO,
 log = logging.getLogger("age gender estimator ")
 log.setLevel(getattr(logging, "INFO"))
 
-
+myapp = Flask(__name__)
 @myapp.route('/age_gender', methods=['POST'])
 def summary():
     header = request.headers.get('age_gender')
@@ -24,3 +24,7 @@ def summary():
             return jsonify({"Error": "Could Not serve request"}), 500
     else:
         jsonify({"Error": "Unvalidated request"}), 401
+
+
+if __name__ == '__main__':
+    myapp.run()
