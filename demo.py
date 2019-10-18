@@ -66,7 +66,9 @@ detector = dlib.get_frontal_face_detector()
 # load model and weights
 img_size = 64
 model = WideResNet(img_size, depth=depth, k=k)()
-model.load_weights(pretrained_model)
+weight_file=weight_file = get_file("weights.28-3.73.hdf5", pretrained_model, cache_subdir="pretrained_models",
+                               file_hash=modhash, cache_dir=str(Path(__file__).resolve().parent))
+model.load_weights(weight_file)
 
 
 def make_prediction(link):
